@@ -30,8 +30,35 @@ export function useApi(path, options = {}) {
       setLoading(false);
       return;
     }
-    run().catch(() => null);
-  }, [options.manual, path, run]);
+    
+    let isMounted = true;
+    
+    // Create a new function to avoid dependency on 'run' which would cause infinite loops
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError("");
+        const result = await apiFetch(path);
+        if (isMounted) {
+          setData(result);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setError(err.message);
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
+    
+    fetchData();
+    
+    return () => {
+      isMounted = false;
+    };
+  }, [path, options.manual]);
 
   return { data, loading, error, run, setData };
 }

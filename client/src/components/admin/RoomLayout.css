@@ -1,0 +1,15 @@
+.room-toolbar { display: flex; flex-wrap: wrap; gap: var(--space-2); padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--color-border); background: var(--color-bg-surface); }
+
+@media (max-width: 767px) { .room-toolbar span { display: none; } }
+
+.workstation-card { position: relative; background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3); }
+
+.workstation-card.status-available { border-color: var(--color-accent); background: var(--color-badge-active-bg); }
+.workstation-card.status-occupied { border-color: var(--color-border-strong); background: var(--color-bg-subtle); }
+.workstation-card.status-offline,
+.workstation-card.status-inactive { border-color: var(--color-border); background: var(--color-bg-page); opacity: 0.6; }
+
+.presence-dot { position: absolute; top: var(--space-2); right: var(--space-2); width: 10px; height: 10px; border-radius: 50%; }
+.presence-dot.online { background: var(--color-success); }
+.presence-dot.offline { background: var(--color-text-muted); }
+.presence-dot.idle { background: var(--color-warning); }

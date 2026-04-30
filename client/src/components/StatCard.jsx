@@ -1,9 +1,9 @@
 export default function StatCard({ label, value, hint }) {
   return (
-    <article className="stat-card">
-      <span>{label}</span>
-      <strong>{value}</strong>
-      {hint ? <small>{hint}</small> : null}
+    <article className="stat-card metric-card">
+      <span className="metric-label">{label}</span>
+      <strong className="metric-value">{value}</strong>
+      {hint ? <small className="card-muted">{hint}</small> : null}
     </article>
   );
 }

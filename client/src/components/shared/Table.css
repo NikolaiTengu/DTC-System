@@ -1,0 +1,13 @@
+.table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; }
+
+.table { width: 100%; border-collapse: collapse; font-size: var(--text-base); table-layout: fixed; }
+
+.table th { padding: var(--space-2) var(--space-4); border-bottom: 1px solid var(--color-border-strong); text-align: left; font-size: var(--text-sm); color: var(--color-text-secondary); font-weight: 500; vertical-align: middle; }
+
+.table td { padding: var(--space-2) var(--space-4); border-bottom: 1px solid var(--color-border); color: var(--color-text-primary); vertical-align: middle; word-break: break-word; }
+
+.table tr:hover td { background: var(--color-bg-subtle); }
+
+.table .col-num, .table .col-status { text-align: center; }
+
+@media (max-width: 767px) { .table-hide-sm { display: none; } }

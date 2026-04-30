@@ -53,22 +53,22 @@ export default function EventsPage() {
       <PageHeader title="Events and Trainings" subtitle="Schedule DTC activities and track participants." />
       <Toast message={message} />
       <section className="grid-two">
-        <form className="panel" onSubmit={submit}>
+        <form className="panel card" onSubmit={submit}>
           <h2>Create Event</h2>
           <div className="form-grid">
             {["title", "description", "date", "startTime", "endTime", "venue", "capacity", "notes"].map((field) => (
               <label key={field}>
                 {field}
                 {field === "description" || field === "notes" ? (
-                  <textarea value={form[field]} onChange={(e) => setForm((current) => ({ ...current, [field]: e.target.value }))} />
+                  <textarea className="textarea" value={form[field]} onChange={(e) => setForm((current) => ({ ...current, [field]: e.target.value }))} />
                 ) : (
-                  <input value={form[field]} onChange={(e) => setForm((current) => ({ ...current, [field]: e.target.value }))} />
+                  <input className="input" value={form[field]} onChange={(e) => setForm((current) => ({ ...current, [field]: e.target.value }))} />
                 )}
               </label>
             ))}
             <label>
               Event Type
-              <select value={form.eventType} onChange={(e) => setForm((current) => ({ ...current, eventType: e.target.value }))}>
+              <select className="select" value={form.eventType} onChange={(e) => setForm((current) => ({ ...current, eventType: e.target.value }))}>
                 <option value="training">Training</option>
                 <option value="event">Event</option>
                 <option value="seminar">Seminar</option>
@@ -76,7 +76,7 @@ export default function EventsPage() {
             </label>
             <label>
               Person In Charge
-              <select value={form.personInChargeUserId} onChange={(e) => setForm((current) => ({ ...current, personInChargeUserId: e.target.value }))}>
+              <select className="select" value={form.personInChargeUserId} onChange={(e) => setForm((current) => ({ ...current, personInChargeUserId: e.target.value }))}>
                 <option value="">Select</option>
                 {(usersApi.data?.items || []).map((user) => (
                   <option key={user._id} value={user._id}>
@@ -88,8 +88,8 @@ export default function EventsPage() {
             <label>
               Resource Speaker
               <div className="inline-row">
-                <input value={speakerName} onChange={(e) => setSpeakerName(e.target.value)} />
-                <button type="button" className="ghost-button" onClick={addSpeaker}>
+                <input className="input" value={speakerName} onChange={(e) => setSpeakerName(e.target.value)} />
+                <button type="button" className="btn btn-ghost" onClick={addSpeaker}>
                   Add
                 </button>
               </div>
@@ -100,9 +100,9 @@ export default function EventsPage() {
               <span className="chip" key={speaker.name}>{speaker.name}</span>
             ))}
           </div>
-          <button>Create Event</button>
+          <button className="btn btn-primary">Create Event</button>
         </form>
-        <div className="panel">
+        <div className="panel card">
           <h2>Event List</h2>
           <DataTable
             columns={[

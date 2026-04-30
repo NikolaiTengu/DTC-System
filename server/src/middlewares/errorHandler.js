@@ -24,6 +24,16 @@ function errorHandler(err, req, res, next) {
     return res.status(409).json({ message: "Duplicate value detected", details: err.keyValue });
   }
 
+  // Log all errors for debugging
+  console.error("Request Error:", {
+    method: req.method,
+    path: req.path,
+    statusCode,
+    message: err.message,
+    name: err.name,
+    stack: process.env.NODE_ENV !== "production" ? err.stack : undefined
+  });
+
   if (!(err instanceof AppError) && process.env.NODE_ENV !== "production") {
     payload.stack = err.stack;
   }

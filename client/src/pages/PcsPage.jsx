@@ -35,18 +35,18 @@ export default function PcsPage() {
       <PageHeader title="PC Inventory" subtitle="Manage workstation metadata, availability, and layout placement." />
       <Toast message={message} />
       <section className="grid-two">
-        <form className="panel" onSubmit={submit}>
+        <form className="panel card" onSubmit={submit}>
           <h2>Add Workstation</h2>
           <div className="form-grid">
             {["pcCode", "displayName", "roomZone", "locationLabel", "sortOrder"].map((field) => (
               <label key={field}>
                 {field}
-                <input value={form[field]} onChange={(e) => setForm((current) => ({ ...current, [field]: e.target.value }))} />
+                <input className="input" value={form[field]} onChange={(e) => setForm((current) => ({ ...current, [field]: e.target.value }))} />
               </label>
             ))}
             <label>
               Status
-              <select value={form.status} onChange={(e) => setForm((current) => ({ ...current, status: e.target.value }))}>
+              <select className="select" value={form.status} onChange={(e) => setForm((current) => ({ ...current, status: e.target.value }))}>
                 {["available", "occupied", "maintenance", "inactive", "pulled_out", "offline"].map((status) => (
                   <option key={status} value={status}>
                     {status}
@@ -55,9 +55,9 @@ export default function PcsPage() {
               </select>
             </label>
           </div>
-          <button>Add PC</button>
+          <button className="btn btn-primary">Add PC</button>
         </form>
-        <div className="panel">
+        <div className="panel card">
           <h2>Registered PCs</h2>
           <DataTable
             columns={[
@@ -70,6 +70,20 @@ export default function PcsPage() {
             ]}
             rows={data?.items || []}
           />
+          <div className="pc-card-list">
+            {(data?.items || []).map((pc) => (
+              <div key={pc._id} className="pc-card">
+                <div className="meta">
+                  <strong>{pc.displayName}</strong>
+                  <small>{pc.pcCode}</small>
+                  <small>{pc.roomZone || "-"}</small>
+                </div>
+                <div className="pc-card-actions">
+                  <span className="badge badge-info">{pc.status}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </div>

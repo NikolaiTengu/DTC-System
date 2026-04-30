@@ -34,26 +34,30 @@ export default function LayoutPage() {
 
   return (
     <div className="page-stack">
-      <PageHeader title="Room Layout Editor" subtitle="Adjust workstation placement for the DTC room map." actions={<button onClick={saveLayout}>Save Layout</button>} />
+      <PageHeader title="Room Layout Editor" subtitle="Adjust workstation placement for the DTC room map." actions={<button className="btn btn-primary" onClick={saveLayout}>Save Layout</button>} />
+      <div className="room-toolbar">
+        <span>Use arrow controls to move workstation cards.</span>
+      </div>
       <Toast message={message} />
       <div className="layout-grid">
         {(data?.items || []).map((pc) => (
           <div
             key={pc._id}
-            className={`layout-card status-${pc.status}`}
+            className={`layout-card workstation-card status-${pc.status}`}
             style={{
               gridColumn: `${pc.layoutX + 1} / span ${pc.layoutWidth}`,
               gridRow: `${pc.layoutY + 1} / span ${pc.layoutHeight}`
             }}
           >
+            <span className={`presence-dot ${pc.status === "offline" || pc.status === "inactive" ? "offline" : "online"}`} />
             <strong>{pc.displayName}</strong>
             <span>{pc.pcCode}</span>
             <small>{pc.status}</small>
             <div className="mini-actions">
-              <button onClick={() => move(pc._id, "layoutX", -1)}>←</button>
-              <button onClick={() => move(pc._id, "layoutX", 1)}>→</button>
-              <button onClick={() => move(pc._id, "layoutY", -1)}>↑</button>
-              <button onClick={() => move(pc._id, "layoutY", 1)}>↓</button>
+              <button className="btn btn-ghost" onClick={() => move(pc._id, "layoutX", -1)}>←</button>
+              <button className="btn btn-ghost" onClick={() => move(pc._id, "layoutX", 1)}>→</button>
+              <button className="btn btn-ghost" onClick={() => move(pc._id, "layoutY", -1)}>↑</button>
+              <button className="btn btn-ghost" onClick={() => move(pc._id, "layoutY", 1)}>↓</button>
             </div>
           </div>
         ))}

@@ -1,7 +1,7 @@
 export default function DataTable({ columns, rows }) {
   return (
-    <div className="table-wrap">
-      <table className="data-table">
+    <div className="table-wrap table-wrapper">
+      <table className="data-table table">
         <thead>
           <tr>
             {columns.map((column) => (

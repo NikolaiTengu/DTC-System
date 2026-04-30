@@ -32,14 +32,14 @@ export default function LoginPage() {
         <p>Employee login for admin and staff operations.</p>
         <label>
           Email
-          <input value={email} onChange={(event) => setEmail(event.target.value)} type="email" />
+          <input className="input" value={email} onChange={(event) => setEmail(event.target.value)} type="email" />
         </label>
         <label>
           Password
-          <input value={password} onChange={(event) => setPassword(event.target.value)} type="password" />
+          <input className="input" value={password} onChange={(event) => setPassword(event.target.value)} type="password" />
         </label>
         {error ? <div className="error-banner">{error}</div> : null}
-        <button disabled={loading}>{loading ? "Signing in..." : "Sign in"}</button>
+        <button className="btn btn-primary" disabled={loading}>{loading ? "Signing in..." : "Sign in"}</button>
       </form>
     </div>
   );

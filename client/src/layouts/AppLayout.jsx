@@ -30,7 +30,12 @@ export default function AppLayout() {
         </div>
         <nav className="sidebar-nav">
           {navItems.map(([label, href]) => (
-            <NavLink key={href} to={href} end={href === "/"}>
+            <NavLink
+              key={href}
+              to={href}
+              end={href === "/"}
+              className={({ isActive }) => `sidebar-item${isActive ? " active" : ""}`}
+            >
               {label}
             </NavLink>
           ))}

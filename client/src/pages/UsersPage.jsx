@@ -47,13 +47,14 @@ export default function UsersPage() {
       <PageHeader title="Employees and Users" subtitle="Create staff accounts and control access." />
       <Toast message={message} />
       <section className="grid-two">
-        <form className="panel" onSubmit={submit}>
+        <form className="panel card" onSubmit={submit}>
           <h2>Create User</h2>
           <div className="form-grid">
             {["firstName", "lastName", "email", "password", "phone", "position"].map((field) => (
               <label key={field}>
                 {field}
                 <input
+                  className="input"
                   type={field === "password" ? "password" : "text"}
                   value={form[field]}
                   onChange={(event) => setForm((current) => ({ ...current, [field]: event.target.value }))}
@@ -63,6 +64,7 @@ export default function UsersPage() {
             <label>
               Roles
               <select
+                className="select"
                 multiple
                 value={form.roleIds}
                 onChange={(event) =>
@@ -80,9 +82,9 @@ export default function UsersPage() {
               </select>
             </label>
           </div>
-          <button>Create User</button>
+          <button className="btn btn-primary">Create User</button>
         </form>
-        <div className="panel">
+        <div className="panel card">
           <h2>User Directory</h2>
           <DataTable
             columns={[
@@ -102,7 +104,7 @@ export default function UsersPage() {
                 key: "actions",
                 label: "Action",
                 render: (row) => (
-                  <button className="ghost-button" onClick={() => toggleActive(row)}>
+                  <button className="btn btn-ghost" onClick={() => toggleActive(row)}>
                     {row.isActive ? "Deactivate" : "Activate"}
                   </button>
                 )

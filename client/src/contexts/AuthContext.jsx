@@ -8,18 +8,40 @@ export function AuthProvider({ children }) {
   const [bootstrapped, setBootstrapped] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("dtc_access_token");
-    if (!token) {
-      setBootstrapped(true);
-      return;
-    }
-    apiFetch("/auth/me")
-      .then((data) => setUser(data.user))
-      .catch(() => {
-        localStorage.removeItem("dtc_access_token");
-        localStorage.removeItem("dtc_refresh_token");
-      })
-      .finally(() => setBootstrapped(true));
+    let isMounted = true;
+    
+    const checkAuth = async () => {
+      const token = localStorage.getItem("dtc_access_token");
+      if (!token) {
+        if (isMounted) {
+          setBootstrapped(true);
+        }
+        return;
+      }
+      
+      try {
+        const data = await apiFetch("/auth/me");
+        if (isMounted) {
+          setUser(data.user);
+        }
+      } catch (error) {
+        if (isMounted) {
+          localStorage.removeItem("dtc_access_token");
+          localStorage.removeItem("dtc_refresh_token");
+          console.error("Auth check failed:", error);
+        }
+      } finally {
+        if (isMounted) {
+          setBootstrapped(true);
+        }
+      }
+    };
+    
+    checkAuth();
+    
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const value = useMemo(
@@ -31,13 +53,18 @@ export function AuthProvider({ children }) {
         return user?.permissions?.includes(permission);
       },
       async login(email, password) {
-        const data = await apiFetch("/auth/login", {
-          method: "POST",
-          body: JSON.stringify({ email, password })
-        });
-        localStorage.setItem("dtc_access_token", data.accessToken);
-        localStorage.setItem("dtc_refresh_token", data.refreshToken);
-        setUser(data.user);
+        try {
+          const data = await apiFetch("/auth/login", {
+            method: "POST",
+            body: JSON.stringify({ email, password })
+          });
+          localStorage.setItem("dtc_access_token", data.accessToken);
+          localStorage.setItem("dtc_refresh_token", data.refreshToken);
+          setUser(data.user);
+        } catch (error) {
+          console.error("Login failed:", error);
+          throw error;
+        }
       },
       async logout() {
         const refreshToken = localStorage.getItem("dtc_refresh_token");
@@ -46,12 +73,14 @@ export function AuthProvider({ children }) {
             method: "POST",
             body: JSON.stringify({ refreshToken })
           });
-        } catch {
-          // ignore logout failures and clear local state
+        } catch (error) {
+          // Log logout errors but don't throw - we still want to clear local state
+          console.error("Logout API call failed:", error);
+        } finally {
+          localStorage.removeItem("dtc_access_token");
+          localStorage.removeItem("dtc_refresh_token");
+          setUser(null);
         }
-        localStorage.removeItem("dtc_access_token");
-        localStorage.removeItem("dtc_refresh_token");
-        setUser(null);
       }
     }),
     [bootstrapped, user]

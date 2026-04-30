@@ -18,13 +18,14 @@ export default function SettingsPage() {
 
   return (
     <div className="page-stack">
-      <PageHeader title="Settings" subtitle="Manage room and application defaults." actions={<button onClick={save}>Save Settings</button>} />
+      <PageHeader title="Settings" subtitle="Manage room and application defaults." actions={<button className="btn btn-primary" onClick={save}>Save Settings</button>} />
       {message ? <div className="toast success">{message}</div> : null}
-      <div className="panel">
+      <div className="panel card">
         {(data?.items || []).map((item) => (
           <label key={item._id || item.key}>
             {item.key}
             <textarea
+              className="textarea"
               value={JSON.stringify(item.value, null, 2)}
               onChange={(event) => {
                 const nextValue = event.target.value;

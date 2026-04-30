@@ -25,6 +25,33 @@ export default function RolesPage() {
   const { data, run } = useApi("/roles?limit=50");
   const [form, setForm] = useState({ name: "", description: "", permissions: [] });
   const [message, setMessage] = useState("");
+  const [permissionPage, setPermissionPage] = useState(0);
+  const permissionPageSize = 5;
+  const permissionPageCount = Math.max(1, Math.ceil(permissionOptions.length / permissionPageSize));
+  const visiblePermissions = permissionOptions.slice(
+    permissionPage * permissionPageSize,
+    permissionPage * permissionPageSize + permissionPageSize
+  );
+
+  function togglePermission(permission) {
+    setForm((current) => {
+      const isSelected = current.permissions.includes(permission);
+      return {
+        ...current,
+        permissions: isSelected
+          ? current.permissions.filter((item) => item !== permission)
+          : [...current.permissions, permission]
+      };
+    });
+  }
+
+  function previousPermissionPage() {
+    setPermissionPage((current) => Math.max(0, current - 1));
+  }
+
+  function nextPermissionPage() {
+    setPermissionPage((current) => Math.min(permissionPageCount - 1, current + 1));
+  }
 
   async function submit(event) {
     event.preventDefault();
@@ -42,43 +69,70 @@ export default function RolesPage() {
       <PageHeader title="Roles and Permissions" subtitle="Database-backed RBAC configuration." />
       <Toast message={message} />
       <section className="grid-two">
-        <form className="panel" onSubmit={submit}>
+        <form className="panel card" onSubmit={submit}>
           <h2>Create Role</h2>
           <div className="form-grid">
             <label>
               Name
-              <input value={form.name} onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))} />
+              <input className="input" value={form.name} onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))} />
             </label>
             <label>
               Description
               <textarea
+                className="textarea"
                 value={form.description}
                 onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))}
               />
             </label>
-            <label>
+            <label className="permissions-field">
               Permissions
-              <select
-                multiple
-                value={form.permissions}
-                onChange={(event) =>
-                  setForm((current) => ({
-                    ...current,
-                    permissions: Array.from(event.target.selectedOptions).map((option) => option.value)
-                  }))
-                }
-              >
-                {permissionOptions.map((permission) => (
-                  <option key={permission} value={permission}>
-                    {permission}
-                  </option>
-                ))}
-              </select>
+              <div className="permission-table-wrap table-wrapper">
+                <table className="permission-table table">
+                  <thead>
+                    <tr>
+                      <th>Permission</th>
+                      <th>Enabled</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {visiblePermissions.map((permission) => (
+                      <tr key={permission}>
+                        <td className="permission-name-cell">{permission}</td>
+                        <td className="permission-toggle-cell">
+                          <input
+                            type="checkbox"
+                            checked={form.permissions.includes(permission)}
+                            onChange={() => togglePermission(permission)}
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <div className="permission-table-footer">
+                  <span className="toolbar-meta">Page {permissionPage + 1} of {permissionPageCount}</span>
+                  <div className="button-group">
+                    <button className="btn btn-ghost" type="button" onClick={previousPermissionPage} disabled={permissionPage === 0}>
+                      Prev
+                    </button>
+                    <button
+                      className="btn btn-ghost"
+                      type="button"
+                      onClick={nextPermissionPage}
+                      disabled={permissionPage >= permissionPageCount - 1}
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              </div>
             </label>
           </div>
-          <button>Create Role</button>
+          <div className="form-actions">
+            <button className="btn btn-primary">Create Role</button>
+          </div>
         </form>
-        <div className="panel">
+        <div className="panel card">
           <h2>Role List</h2>
           <DataTable
             columns={[

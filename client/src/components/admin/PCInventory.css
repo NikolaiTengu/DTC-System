@@ -1,0 +1,12 @@
+@media (max-width: 767px) {
+  .pc-table { display: none; }
+  .pc-card-list { display: flex; flex-direction: column; gap: var(--space-3); }
+}
+
+@media (min-width: 768px) {
+  .pc-card-list { display: none; }
+}
+
+.pc-card { background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-4); display: flex; justify-content: space-between; align-items: center; }
+.pc-card .meta { display: flex; flex-direction: column; gap: var(--space-1); }
+.pc-card-actions { display: flex; gap: var(--space-2); }

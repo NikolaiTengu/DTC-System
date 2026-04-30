@@ -32,21 +32,21 @@ export default function FeedbackTemplatesPage() {
     <div className="page-stack">
       <PageHeader title="Feedback Form Builder" subtitle="Manage reusable exit and event feedback templates." />
       <section className="grid-two">
-        <form className="panel" onSubmit={submit}>
+        <form className="panel card" onSubmit={submit}>
           <h2>Create Template</h2>
           <div className="form-grid">
             <label>
               Name
-              <input value={form.name} onChange={(e) => setForm((current) => ({ ...current, name: e.target.value }))} />
+              <input className="input" value={form.name} onChange={(e) => setForm((current) => ({ ...current, name: e.target.value }))} />
             </label>
             <label>
               Description
-              <textarea value={form.description} onChange={(e) => setForm((current) => ({ ...current, description: e.target.value }))} />
+              <textarea className="textarea" value={form.description} onChange={(e) => setForm((current) => ({ ...current, description: e.target.value }))} />
             </label>
           </div>
-          <button>Create Template</button>
+          <button className="btn btn-primary">Create Template</button>
         </form>
-        <div className="panel">
+        <div className="panel card">
           <h2>Templates</h2>
           <DataTable
             columns={[

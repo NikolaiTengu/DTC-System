@@ -1,7 +1,7 @@
 :root {
   font-family: "Segoe UI", sans-serif;
-  color: #eef7f5;
-  background: #08241f;
+  color: var(--color-text-primary);
+  background: var(--color-bg-page);
 }
 
 * {
@@ -11,9 +11,7 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background:
-    radial-gradient(circle at top, rgba(88, 196, 170, 0.22), transparent 30%),
-    linear-gradient(180deg, #11332d 0%, #081c18 100%);
+  background: color-mix(in srgb, var(--color-bg-page) 80%, transparent);
 }
 
 button,
@@ -27,8 +25,8 @@ button {
   border: none;
   padding: 0.9rem 1rem;
   border-radius: 14px;
-  background: #59cfab;
-  color: #08241f;
+  background: var(--color-accent);
+  color: #FFFFFF;
   cursor: pointer;
   font-weight: 700;
 }
@@ -37,9 +35,9 @@ input,
 select,
 textarea {
   width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.08);
-  color: white;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
   padding: 0.85rem;
   border-radius: 14px;
 }
@@ -55,9 +53,9 @@ textarea {
   width: min(560px, 100%);
   padding: 1.6rem;
   border-radius: 28px;
-  background: rgba(7, 20, 18, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.3);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 30px 90px color-mix(in srgb, var(--color-bg-page) 80%, transparent);
 }
 
 .workstation-card h1 {
@@ -69,7 +67,7 @@ textarea {
   text-transform: uppercase;
   letter-spacing: 0.18em;
   font-size: 0.74rem;
-  color: #9de6d2;
+  color: var(--color-text-secondary);
 }
 
 .workstation-form {

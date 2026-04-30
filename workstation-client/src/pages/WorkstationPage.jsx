@@ -92,8 +92,8 @@ export default function WorkstationPage() {
   }
 
   return (
-    <div className="workstation-shell">
-      <div className="workstation-card">
+    <div className="workstation-shell kiosk-root">
+      <div className="workstation-card kiosk-card">
         <span className="kicker">DICT DTC Workstation</span>
         <h1>{state === "unlocked" ? "Session Active" : "Locked Workstation"}</h1>
         <p>{message}</p>

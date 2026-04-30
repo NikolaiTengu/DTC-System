@@ -36,19 +36,19 @@ export default function EventParticipantsPage() {
     <div className="page-stack">
       <PageHeader title="Event Participants" subtitle="Register participants and manage attendance." />
       <section className="grid-two">
-        <form className="panel" onSubmit={submit}>
+        <form className="panel card" onSubmit={submit}>
           <h2>Register Participant</h2>
           <div className="form-grid">
             {["fullName", "contactNumber", "email", "organization"].map((field) => (
               <label key={field}>
                 {field}
-                <input value={form[field]} onChange={(e) => setForm((current) => ({ ...current, [field]: e.target.value }))} />
+                <input className="input" value={form[field]} onChange={(e) => setForm((current) => ({ ...current, [field]: e.target.value }))} />
               </label>
             ))}
           </div>
-          <button>Add Participant</button>
+          <button className="btn btn-primary">Add Participant</button>
         </form>
-        <div className="panel">
+        <div className="panel card">
           <h2>Participant List</h2>
           <DataTable
             columns={[
@@ -60,8 +60,8 @@ export default function EventParticipantsPage() {
                 label: "Action",
                 render: (row) => (
                   <div className="inline-row">
-                    <button onClick={() => updateAttendance(row._id, "checked_in")}>Check In</button>
-                    <button className="ghost-button" onClick={() => updateAttendance(row._id, "checked_out")}>
+                    <button className="btn btn-primary" onClick={() => updateAttendance(row._id, "checked_in")}>Check In</button>
+                    <button className="btn btn-ghost" onClick={() => updateAttendance(row._id, "checked_out")}>
                       Check Out
                     </button>
                   </div>

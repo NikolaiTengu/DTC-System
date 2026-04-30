@@ -7,12 +7,12 @@ export default function DashboardPage() {
   const { data, loading } = useApi("/reports/dashboard");
 
   return (
-    <div className="page-stack">
+    <div className="page-stack page-content">
       <PageHeader title="Dashboard" subtitle="Live DTC room operations overview." />
       {loading ? <div className="panel">Loading dashboard...</div> : null}
       {data ? (
         <>
-          <section className="stats-grid">
+          <section className="stats-grid metric-grid">
             <StatCard label="Active Guests" value={data.activeGuests} />
             <StatCard label="Checked Out Today" value={data.checkedOutToday} />
             <StatCard label="Active PC Sessions" value={data.activePcSessions} />

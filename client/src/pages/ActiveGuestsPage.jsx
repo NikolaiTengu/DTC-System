@@ -17,7 +17,7 @@ export default function ActiveGuestsPage() {
   return (
     <div className="page-stack">
       <PageHeader title="Active Guests" subtitle="Monitor ongoing guest sessions and check them out." />
-      <div className="panel">
+      <div className="panel card">
         <DataTable
           columns={[
             { key: "guest", label: "Guest", render: (row) => row.guestId?.fullName },
@@ -28,7 +28,7 @@ export default function ActiveGuestsPage() {
             {
               key: "actions",
               label: "Action",
-              render: (row) => <button onClick={() => checkout(row._id)}>Check Out</button>
+              render: (row) => <button className="btn btn-primary" onClick={() => checkout(row._id)}>Check Out</button>
             }
           ]}
           rows={data?.items || []}
