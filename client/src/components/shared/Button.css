@@ -2,34 +2,42 @@
   height: var(--btn-height);
   padding: 0 var(--btn-padding-x);
   font-size: var(--text-base);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  border: 1.5px solid transparent;
   background: var(--color-bg-surface);
-  color: var(--color-on-surface);
+  color: var(--color-text-primary);
   cursor: pointer;
   white-space: nowrap;
-  transition: background var(--transition-fast), border-color var(--transition-fast), transform 0.08s;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
   min-height: var(--btn-height);
+  font-weight: 700;
 }
 
-.btn:hover { background: var(--color-bg-subtle); }
-.btn:active { transform: scale(0.98); }
+.btn:hover { background: var(--color-highlight-bg); transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
 
 .btn-primary {
-  background: var(--color-accent);
-  color: #FFFFFF;
-  border-color: var(--color-accent);
+  background: linear-gradient(135deg, #0D2B6B 0%, #1A3F8F 50%, #CC2027 100%);
+  color: #ffffff;
+  border-color: #0D2B6B;
+  box-shadow: 0 8px 24px rgba(13, 43, 107, 0.18);
+  font-weight: 700;
 }
-.btn-primary:hover { background: var(--color-accent-hover); border-color: var(--color-accent-hover); }
+.btn-primary:hover { 
+  background: linear-gradient(135deg, #0D2B6B 0%, #2952B3 55%, #CC2027 100%); 
+  border-color: #CC2027;
+  box-shadow: 0 16px 32px var(--color-highlight-bg);
+}
 
 .btn-danger { background: var(--color-danger); color: var(--color-on-danger); border-color: var(--color-danger); }
+.btn-danger:hover { background: #8B0000; }
 
 .btn-ghost { background: transparent; border-color: transparent; color: var(--color-text-primary); }
-.btn-ghost:hover { background: var(--color-bg-subtle); }
+.btn-ghost:hover { background: var(--color-highlight-bg); }
 
 .btn-sm { height: 28px; font-size: var(--text-sm); padding: 0 calc(var(--space-3) * 0.75); }
 .btn-lg { height: 44px; font-size: var(--text-md); padding: 0 calc(var(--space-4) * 1.25); }

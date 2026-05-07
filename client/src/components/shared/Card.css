@@ -3,11 +3,12 @@
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border);
   padding: var(--space-4);
+  box-shadow: var(--shadow-sm);
 }
 
 @media (min-width: 768px) {
   .card { padding: var(--space-6); }
 }
 
-.card-title { font-size: var(--text-md); font-weight: 500; color: var(--color-text-primary); margin: 0 0 var(--space-4) 0; }
+.card-title { font-size: var(--text-md); font-weight: 700; color: var(--color-text-primary); margin: 0 0 var(--space-4) 0; }
 .card-muted { color: var(--color-text-secondary); font-size: var(--text-sm); margin: 0; }

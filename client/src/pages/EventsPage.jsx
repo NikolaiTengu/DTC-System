@@ -53,16 +53,25 @@ export default function EventsPage() {
       <PageHeader title="Events and Trainings" subtitle="Schedule DTC activities and track participants." />
       <Toast message={message} />
       <section className="grid-two">
-        <form className="panel card" onSubmit={submit}>
+        <form className="panel card create-event-form" onSubmit={submit}>
           <h2>Create Event</h2>
           <div className="form-grid">
-            {["title", "description", "date", "startTime", "endTime", "venue", "capacity", "notes"].map((field) => (
-              <label key={field}>
-                {field}
-                {field === "description" || field === "notes" ? (
-                  <textarea className="textarea" value={form[field]} onChange={(e) => setForm((current) => ({ ...current, [field]: e.target.value }))} />
+            {[
+              { key: "title", label: "Title" },
+              { key: "description", label: "Description" },
+              { key: "date", label: "Date" },
+              { key: "startTime", label: "Start Time" },
+              { key: "endTime", label: "End Time" },
+              { key: "venue", label: "Venue" },
+              { key: "capacity", label: "Capacity" },
+              { key: "notes", label: "Notes" },
+            ].map((field) => (
+              <label key={field.key}>
+                {field.label}
+                {field.key === "description" || field.key === "notes" ? (
+                  <textarea className="textarea" value={form[field.key]} onChange={(e) => setForm((current) => ({ ...current, [field.key]: e.target.value }))} />
                 ) : (
-                  <input className="input" value={form[field]} onChange={(e) => setForm((current) => ({ ...current, [field]: e.target.value }))} />
+                  <input className="input" value={form[field.key]} onChange={(e) => setForm((current) => ({ ...current, [field.key]: e.target.value }))} />
                 )}
               </label>
             ))}
@@ -88,10 +97,17 @@ export default function EventsPage() {
             <label>
               Resource Speaker
               <div className="inline-row">
-                <input className="input" value={speakerName} onChange={(e) => setSpeakerName(e.target.value)} />
-                <button type="button" className="btn btn-ghost" onClick={addSpeaker}>
-                  Add
-                </button>
+                <input
+                  className="input"
+                  value={speakerName}
+                  onChange={(e) => setSpeakerName(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      addSpeaker();
+                    }
+                  }}
+                />
               </div>
             </label>
           </div>

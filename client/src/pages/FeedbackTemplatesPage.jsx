@@ -32,7 +32,7 @@ export default function FeedbackTemplatesPage() {
     <div className="page-stack">
       <PageHeader title="Feedback Form Builder" subtitle="Manage reusable exit and event feedback templates." />
       <section className="grid-two">
-        <form className="panel card" onSubmit={submit}>
+        <form className="panel card feedback-builder-form" onSubmit={submit}>
           <h2>Create Template</h2>
           <div className="form-grid">
             <label>

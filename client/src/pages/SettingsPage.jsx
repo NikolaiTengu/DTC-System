@@ -20,7 +20,7 @@ export default function SettingsPage() {
     <div className="page-stack">
       <PageHeader title="Settings" subtitle="Manage room and application defaults." actions={<button className="btn btn-primary" onClick={save}>Save Settings</button>} />
       {message ? <div className="toast success">{message}</div> : null}
-      <div className="panel card">
+      <div className="panel card settings-panel">
         {(data?.items || []).map((item) => (
           <label key={item._id || item.key}>
             {item.key}

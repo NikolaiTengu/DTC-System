@@ -69,7 +69,7 @@ export default function RolesPage() {
       <PageHeader title="Roles and Permissions" subtitle="Database-backed RBAC configuration." />
       <Toast message={message} />
       <section className="grid-two">
-        <form className="panel card" onSubmit={submit}>
+        <form className="panel card roles-form" onSubmit={submit}>
           <h2>Create Role</h2>
           <div className="form-grid">
             <label>

@@ -2,11 +2,25 @@
 
 .table { width: 100%; border-collapse: collapse; font-size: var(--text-base); table-layout: fixed; }
 
-.table th { padding: var(--space-2) var(--space-4); border-bottom: 1px solid var(--color-border-strong); text-align: left; font-size: var(--text-sm); color: var(--color-text-secondary); font-weight: 500; vertical-align: middle; }
+.table th { padding: var(--space-2) var(--space-4); border-bottom: 1px solid var(--color-border-strong); text-align: left; font-size: var(--text-sm); color: #0D2B6B; font-weight: 700; vertical-align: middle; background: #F7FAFF; }
 
-.table td { padding: var(--space-2) var(--space-4); border-bottom: 1px solid var(--color-border); color: var(--color-text-primary); vertical-align: middle; word-break: break-word; }
+.table td { padding: var(--space-2) var(--space-4); border-bottom: 1px solid var(--color-border); color: #0D2B6B; vertical-align: middle; word-break: break-word; }
 
-.table tr:hover td { background: var(--color-bg-subtle); }
+.table tr:hover td { background: var(--color-highlight-bg); }
+
+/* Permissions table overrides for dark background */
+.permission-table.table th {
+	color: #FFFFFF;
+	background: #0D2B6B;
+}
+
+.permission-table.table td {
+	color: #FFFFFF;
+}
+
+.permission-table.table tr:hover td {
+  background: rgba(13, 43, 107, 0.6);
+}
 
 .table .col-num, .table .col-status { text-align: center; }
 

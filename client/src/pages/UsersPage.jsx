@@ -47,17 +47,24 @@ export default function UsersPage() {
       <PageHeader title="Employees and Users" subtitle="Create staff accounts and control access." />
       <Toast message={message} />
       <section className="grid-two">
-        <form className="panel card" onSubmit={submit}>
+        <form className="panel card users-form" onSubmit={submit}>
           <h2>Create User</h2>
           <div className="form-grid">
-            {["firstName", "lastName", "email", "password", "phone", "position"].map((field) => (
-              <label key={field}>
-                {field}
+            {[
+              { key: "firstName", label: "First Name" },
+              { key: "lastName", label: "Last Name" },
+              { key: "email", label: "Email" },
+              { key: "password", label: "Password" },
+              { key: "phone", label: "Phone" },
+              { key: "position", label: "Position" },
+            ].map((field) => (
+              <label key={field.key}>
+                {field.label}
                 <input
                   className="input"
-                  type={field === "password" ? "password" : "text"}
-                  value={form[field]}
-                  onChange={(event) => setForm((current) => ({ ...current, [field]: event.target.value }))}
+                  type={field.key === "password" ? "password" : "text"}
+                  value={form[field.key]}
+                  onChange={(event) => setForm((current) => ({ ...current, [field.key]: event.target.value }))}
                 />
               </label>
             ))}

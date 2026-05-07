@@ -76,13 +76,21 @@ export default function GuestRegistrationView({ title, source, publicPage = fals
         ) : null}
         {error ? <Toast message={error} tone="error" /> : null}
         <form id="guest-form" className="form-grid" onSubmit={submit}>
-          {["fullName", "contactNumber", "email", "address", "organization", "visitPurpose", "remarks"].map((field) => (
-            <label key={field}>
-              {field}
-              {field === "remarks" ? (
-                <textarea className="textarea" value={form[field]} onChange={(e) => setForm((current) => ({ ...current, [field]: e.target.value }))} />
+          {[
+            { key: "fullName", label: "Full name" },
+            { key: "contactNumber", label: "Contact Number" },
+            { key: "email", label: "Email" },
+            { key: "address", label: "Address" },
+            { key: "organization", label: "Organization" },
+            { key: "visitPurpose", label: "Visit Purpose" },
+            { key: "remarks", label: "Remarks" },
+          ].map((field) => (
+            <label key={field.key}>
+              {field.label}
+              {field.key === "remarks" ? (
+                <textarea className="textarea" value={form[field.key]} onChange={(e) => setForm((current) => ({ ...current, [field.key]: e.target.value }))} />
               ) : (
-                <input className="input" value={form[field]} onChange={(e) => setForm((current) => ({ ...current, [field]: e.target.value }))} />
+                <input className="input" value={form[field.key]} onChange={(e) => setForm((current) => ({ ...current, [field.key]: e.target.value }))} />
               )}
             </label>
           ))}

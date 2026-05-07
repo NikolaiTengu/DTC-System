@@ -35,13 +35,19 @@ export default function PcsPage() {
       <PageHeader title="PC Inventory" subtitle="Manage workstation metadata, availability, and layout placement." />
       <Toast message={message} />
       <section className="grid-two">
-        <form className="panel card" onSubmit={submit}>
+        <form className="panel card add-workstation-form" onSubmit={submit}>
           <h2>Add Workstation</h2>
           <div className="form-grid">
-            {["pcCode", "displayName", "roomZone", "locationLabel", "sortOrder"].map((field) => (
-              <label key={field}>
-                {field}
-                <input className="input" value={form[field]} onChange={(e) => setForm((current) => ({ ...current, [field]: e.target.value }))} />
+            {[
+              { key: "pcCode", label: "PC Code" },
+              { key: "displayName", label: "Display Name" },
+              { key: "roomZone", label: "Room Zone" },
+              { key: "locationLabel", label: "Location Label" },
+              { key: "sortOrder", label: "Sort Order" },
+            ].map((field) => (
+              <label key={field.key}>
+                {field.label}
+                <input className="input" value={form[field.key]} onChange={(e) => setForm((current) => ({ ...current, [field.key]: e.target.value }))} />
               </label>
             ))}
             <label>
