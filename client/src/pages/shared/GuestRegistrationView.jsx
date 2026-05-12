@@ -22,6 +22,7 @@ const initialForm = {
 export default function GuestRegistrationView({ title, source, publicPage = false }) {
   const [events, setEvents] = useState([]);
   const [form, setForm] = useState(initialForm);
+  const [otherPurpose, setOtherPurpose] = useState("");
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
   const [selectedPcId, setSelectedPcId] = useState(null);
@@ -39,6 +40,7 @@ export default function GuestRegistrationView({ title, source, publicPage = fals
     setError("");
     const payload = {
       ...form,
+      visitPurpose: form.visitPurpose === "Others" ? otherPurpose : form.visitPurpose,
       age: form.age ? Number(form.age) : undefined,
       wantsPc: Boolean(form.wantsPc),
       source,
@@ -57,6 +59,7 @@ export default function GuestRegistrationView({ title, source, publicPage = fals
       });
       setResult(data);
       setForm(initialForm);
+      setOtherPurpose("");
       setSelectedPcId(null);
     } catch (err) {
       setError(err.message);
@@ -89,6 +92,46 @@ export default function GuestRegistrationView({ title, source, publicPage = fals
               {field.label}
               {field.key === "remarks" ? (
                 <textarea className="textarea" value={form[field.key]} onChange={(e) => setForm((current) => ({ ...current, [field.key]: e.target.value }))} />
+              ) : field.key === "visitPurpose" ? (
+                <>
+                  <select className="select" value={form[field.key]} onChange={(e) => {
+                    const nextValue = e.target.value;
+                    setForm((current) => ({ ...current, [field.key]: nextValue }));
+                    if (nextValue !== "Others") {
+                      setOtherPurpose("");
+                    }
+                  }}>
+                    <option value="">Select purpose</option>
+                    <option value="Training Session">Training Session</option>
+                    <option value="Seminar/Workshop">Seminar/Workshop</option>
+                    <option value="Meeting">Meeting</option>
+                    <option value="Orientation">Orientation</option>
+                    <option value="Assessment/Examination">Assessment/Examination</option>
+                    <option value="Coaching/Mentoring">Coaching/Mentoring</option>
+                    <option value="Facility Visit/Tour">Facility Visit/Tour</option>
+                    <option value="Guest Speeker/Resource Person">Guest Speeker/Resource Person</option>
+                    <option value="Administrative Transaction">Administrative Transaction</option>
+                    <option value="Document Submission">Document Submission</option>
+                    <option value="Inquiry/Consultation">Inquiry/Consultation</option>
+                    <option value="Equipment/Materials Delivery">Equipment/Materials Delivery</option>
+                    <option value="Technical Support/Maintenance">Technical Support/Maintenance</option>
+                    <option value="Monitoring/Evaluation">Monitoring/Evaluation</option>
+                    <option value="Partnership/Coordination Visit">Partnership/Coordination Visit</option>
+                    <option value="Event Participation">Event Participation</option>
+                    <option value="OJT/Internship-Related Visit">OJT/Internship-Related Visit</option>
+                    <option value="Client/Stakeholder Visit">Client/Stakeholder Visit</option>
+                    <option value="Staff/Employee Visit">Staff/Employee Visit</option>
+                    <option value="Others">Others</option>
+                  </select>
+                  {form[field.key] === "Others" ? (
+                    <input
+                      className="input"
+                      placeholder="Specify purpose"
+                      value={otherPurpose}
+                      onChange={(e) => setOtherPurpose(e.target.value)}
+                    />
+                  ) : null}
+                </>
               ) : (
                 <input className="input" value={form[field.key]} onChange={(e) => setForm((current) => ({ ...current, [field.key]: e.target.value }))} />
               )}
@@ -168,7 +211,7 @@ export default function GuestRegistrationView({ title, source, publicPage = fals
         </div>
       ) : null}
       {!result && !publicPage ? (
-        <div className="panel card">
+        <div className="panel card qr-panel">
           <h2>Self-Service Entry QR</h2>
           <div className="inline-qr">
             <QRCodeSVG value={`${window.location.origin}/guest-register`} size={140} />

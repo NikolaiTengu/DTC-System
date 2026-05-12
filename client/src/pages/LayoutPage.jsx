@@ -73,15 +73,21 @@ export default function LayoutPage() {
         </div>
       ) : (
         <div className="layout-grid">
-          {(data?.items || []).map((pc) => (
-            <div
-              key={pc._id}
-              className={`layout-card workstation-card status-${pc.status}`}
-              style={{
-                gridColumn: `${pc.layoutX + 1} / span ${pc.layoutWidth}`,
-                gridRow: `${pc.layoutY + 1} / span ${pc.layoutHeight}`
-              }}
-            >
+          {(data?.items || []).map((pc) => {
+            const layoutX = Number.isFinite(pc.layoutX) ? pc.layoutX : 0;
+            const layoutY = Number.isFinite(pc.layoutY) ? pc.layoutY : 0;
+            const layoutWidth = Number.isFinite(pc.layoutWidth) ? pc.layoutWidth : 1;
+            const layoutHeight = Number.isFinite(pc.layoutHeight) ? pc.layoutHeight : 1;
+
+            return (
+              <div
+                key={pc._id}
+                className={`layout-card workstation-card status-${pc.status}`}
+                style={{
+                  gridColumn: `${layoutX + 1} / span ${layoutWidth}`,
+                  gridRow: `${layoutY + 1} / span ${layoutHeight}`
+                }}
+              >
               <span className={`presence-dot ${pc.status === "offline" || pc.status === "inactive" ? "offline" : "online"}`} />
               <strong>{pc.displayName}</strong>
               <span>{pc.pcCode}</span>
@@ -92,8 +98,9 @@ export default function LayoutPage() {
                 <button className="btn btn-ghost" onClick={() => move(pc._id, "layoutY", -1)}>↑</button>
                 <button className="btn btn-ghost" onClick={() => move(pc._id, "layoutY", 1)}>↓</button>
               </div>
-            </div>
-          ))}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

@@ -16,7 +16,7 @@ import {
 import { Chip } from "@mui/material";
 
 export default function DashboardPage() {
-  const { data, loading, error } = useApi("/reports/dashboard");
+  const { data, loading, error, run } = useApi("/reports/dashboard");
   const [lastSyncedAt, setLastSyncedAt] = useState(null);
   const [syncMessage, setSyncMessage] = useState("");
   const [syncTone, setSyncTone] = useState("success");
@@ -26,6 +26,23 @@ export default function DashboardPage() {
       setLastSyncedAt(new Date());
     }
   }, [data, loading]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!loading) run();
+    }, 60000);
+
+    const handleFocus = () => {
+      if (!loading) run();
+    };
+
+    window.addEventListener("focus", handleFocus);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("focus", handleFocus);
+    };
+  }, [loading, run]);
 
   useEffect(() => {
     let timer;

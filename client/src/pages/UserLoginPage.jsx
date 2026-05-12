@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { apiFetch } from "../api/http";
 import {
   Box,
   Card,
@@ -11,23 +12,15 @@ import {
   Stack,
   CircularProgress,
   InputAdornment,
-  IconButton,
 } from "@mui/material";
-import {
-  MailOutlined,
-  LockOutlined,
-  VisibilityOutlined,
-  VisibilityOffOutlined,
-  ArrowRightAlt,
-} from "@mui/icons-material";
+import { MailOutlined, ArrowRightAlt } from "@mui/icons-material";
 
-export default function LoginPage() {
-  const { login, user } = useAuth();
-  const [email, setEmail] = useState("admin@dict-dtc.local");
-  const [password, setPassword] = useState("ChangeMe123!");
+export default function UserLoginPage() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [userCode, setUserCode] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
 
   if (user) return <Navigate to="/" replace />;
 
@@ -36,9 +29,33 @@ export default function LoginPage() {
     setLoading(true);
     setError("");
     try {
-      await login(email, password);
+      const ticketCode = userCode.trim();
+      const data = await apiFetch("/tickets/verify", {
+        method: "POST",
+        body: JSON.stringify({ ticketCode })
+      });
+      const guestProfile = data?.guest || null;
+      const guestName = data?.guest?.fullName?.trim() || "";
+      const sessionId = data?.sessionId || data?.ticket?.visitSessionId || "";
+      if (guestName) {
+        sessionStorage.setItem("dtc_user_name", guestName);
+      } else {
+        sessionStorage.removeItem("dtc_user_name");
+      }
+      if (guestProfile) {
+        sessionStorage.setItem("dtc_user_guest_profile", JSON.stringify(guestProfile));
+      } else {
+        sessionStorage.removeItem("dtc_user_guest_profile");
+      }
+      sessionStorage.setItem("dtc_user_ticket_code", ticketCode);
+      if (sessionId) {
+        sessionStorage.setItem("dtc_user_session_id", sessionId);
+      } else {
+        sessionStorage.removeItem("dtc_user_session_id");
+      }
+      navigate("/user-welcome", { replace: true, state: { guestName, sessionId, guestProfile } });
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Invalid ticket code.");
     } finally {
       setLoading(false);
     }
@@ -138,19 +155,19 @@ export default function LoginPage() {
                   mb: 1,
                 }}
               >
-                Management System
+                User Login
               </Typography>
               <Typography variant="body2" sx={{ color: "#6B7280", fontSize: "14px" }}>
-                Employee login for admin and staff operations.
+                Sign in to access your user dashboard.
               </Typography>
             </Box>
 
             <Box sx={{ display: "grid", gap: 2 }}>
               <TextField
-                label="Email"
-                type="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                label="Ticket Code"
+                type="text"
+                value={userCode}
+                onChange={(event) => setUserCode(event.target.value)}
                 fullWidth
                 InputProps={{
                   startAdornment: (
@@ -177,69 +194,6 @@ export default function LoginPage() {
                   "& .MuiInputBase-input": { color: "#0D1B3E" },
                 }}
               />
-
-              <TextField
-                label="Password"
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <LockOutlined fontSize="small" />
-                    </InputAdornment>
-                  ),
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label={showPassword ? "Hide password" : "Show password"}
-                        onClick={() => setShowPassword((current) => !current)}
-                        edge="end"
-                        size="small"
-                      >
-                        {showPassword ? <VisibilityOffOutlined fontSize="small" /> : <VisibilityOutlined fontSize="small" />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    height: 44,
-                    borderRadius: "8px",
-                    backgroundColor: "#FFFFFF",
-                    paddingLeft: 0.5,
-                    paddingRight: 0.75,
-                    "& fieldset": { borderColor: "#C7D2E5", borderWidth: "1px" },
-                    "&:hover fieldset": { borderColor: "#0D2B6B" },
-                    "&.Mui-focused fieldset": {
-                      borderColor: "#0D2B6B",
-                      boxShadow: "0 0 0 3px rgba(13, 43, 107, 0.18)",
-                    },
-                  },
-                  "& .MuiInputLabel-root": { color: "#6B7280", fontWeight: 600 },
-                  "& .MuiInputLabel-root.Mui-focused": { color: "#0D2B6B" },
-                  "& .MuiInputBase-input": { color: "#0D1B3E" },
-                }}
-              />
-            </Box>
-
-            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: -1 }}>
-              <Button
-                variant="text"
-                href="#"
-                sx={{
-                  minWidth: 0,
-                  p: 0,
-                  color: "#1A3F8F",
-                  fontWeight: 500,
-                  fontSize: "13px",
-                  textTransform: "none",
-                  "&:hover": { backgroundColor: "transparent", textDecoration: "underline" },
-                }}
-              >
-                Forgot password?
-              </Button>
             </Box>
 
             {error ? (
@@ -293,7 +247,7 @@ export default function LoginPage() {
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <Button
                 variant="text"
-                href="/user-login"
+                href="/login"
                 sx={{
                   minWidth: 0,
                   p: 0,
@@ -304,10 +258,9 @@ export default function LoginPage() {
                   "&:hover": { backgroundColor: "transparent", textDecoration: "underline" },
                 }}
               >
-                Switch to User View
+                Switch to Admin View
               </Button>
             </Box>
-
           </Stack>
         </CardContent>
       </Card>

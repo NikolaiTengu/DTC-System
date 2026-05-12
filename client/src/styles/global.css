@@ -105,6 +105,17 @@ p { margin: 0 0 var(--space-4) 0; }
 
 .form-label { font-size: var(--text-sm); color: var(--color-text-secondary); font-weight: 600; }
 
+/* Default panel headings/labels in dark blue for contrast */
+.panel h2,
+.panel h3,
+.panel h4,
+.panel h5,
+.panel label,
+.panel .toolbar-meta,
+.panel .panel-title {
+  color: #0D2B6B;
+}
+
 /* Make form labels inside panels more visible on dark surfaces */
 .panel .form-label, .panel .MuiInputLabel-root {
   color: #e2e8f0;
@@ -115,27 +126,27 @@ p { margin: 0 0 var(--space-4) 0; }
   color: #ffffff;
 }
 
-/* Front desk registration labels in cyan */
+/* Front desk registration labels in dark blue */
 .frontdesk-registration label,
 .frontdesk-registration .form-label,
 .frontdesk-registration .checkbox-row {
-  color: #2EC9FF;
+  color: #0D2B6B;
 }
 
-/* Create Event labels in cyan */
+/* Create Event labels in dark blue */
 .create-event-form label {
-  color: #2EC9FF;
+  color: #0D2B6B;
 }
 
-/* Feedback form builder labels in cyan */
+/* Feedback form builder labels in dark blue */
 .feedback-builder-form label {
-  color: #2EC9FF;
+  color: #0D2B6B;
 }
 
-/* Users and Roles labels in cyan */
+/* Users and Roles labels in dark blue */
 .users-form label,
 .roles-form label {
-  color: #2EC9FF;
+  color: #0D2B6B;
 }
 
 /* Settings panel labels in black */
@@ -166,11 +177,15 @@ p { margin: 0 0 var(--space-4) 0; }
 }
 
 .panel {
-  background: var(--color-bg-surface);
+  background: #FFFFFF;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
   padding: 24px;
+}
+
+.grid-two .panel {
+  background: #FFFFFF;
 }
 
 .grid-two {
@@ -193,6 +208,37 @@ p { margin: 0 0 var(--space-4) 0; }
 @media (max-width: 767px) {
   .stats-grid { grid-template-columns: 1fr; }
   .panel { padding: 16px; }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --mobile-surface-alpha: 0.8;
+  }
+
+  .panel,
+  .grid-two .panel {
+    background: rgba(255, 255, 255, var(--mobile-surface-alpha));
+    backdrop-filter: blur(6px);
+  }
+
+  .table th {
+    background: rgba(247, 250, 255, var(--mobile-surface-alpha));
+  }
+
+  .MuiPaper-root,
+  .MuiCard-root,
+  .MuiDialog-paper,
+  .MuiMenu-paper,
+  .MuiPopover-paper {
+    background-color: rgba(255, 255, 255, var(--mobile-surface-alpha)) !important;
+    backdrop-filter: blur(8px);
+  }
+
+  .MuiAppBar-root,
+  .MuiDrawer-paper {
+    background-color: rgba(13, 43, 107, var(--mobile-surface-alpha)) !important;
+    backdrop-filter: blur(8px);
+  }
 }
 
 /* Responsive helpers */
@@ -301,7 +347,7 @@ p { margin: 0 0 var(--space-4) 0; }
   top: 0;
   bottom: 0;
   width: 4px;
-  background: linear-gradient(180deg, #0D2B6B 0%, #2EC9FF 100%);
+  background: linear-gradient(180deg, #0D2B6B 0%, #1A3F8F 100%);
   border-radius: 2px;
 }
 
@@ -327,6 +373,7 @@ p { margin: 0 0 var(--space-4) 0; }
 
 .permission-table-wrap {
   margin-top: 0.7rem;
+  margin-bottom: 1rem;
   border: 1px solid var(--color-border);
   border-radius: 12px;
   background: var(--color-bg-surface);
@@ -397,7 +444,7 @@ p { margin: 0 0 var(--space-4) 0; }
 
 .permission-table-footer {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   gap: 0.9rem;
   padding: 0.65rem 0.85rem;
@@ -408,16 +455,33 @@ p { margin: 0 0 var(--space-4) 0; }
 .permission-table-footer .toolbar-meta {
   min-width: 100px;
   white-space: nowrap;
+  color: #FFFFFF;
 }
 
 .permission-table-footer .button-group {
-  margin-left: 0;
+  margin-left: auto;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
 }
 
 .qr-preview {
   width: 180px;
   border-radius: 12px;
   border: 1px solid var(--color-border);
+}
+
+.qr-panel {
+  background: #FFFFFF;
+}
+
+.qr-panel h2,
+.qr-panel p,
+.qr-panel span {
+  color: #0D2B6B;
 }
 
 .chip {

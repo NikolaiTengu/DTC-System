@@ -1,4 +1,5 @@
 const VisitSession = require("../../models/VisitSession");
+const UnlockTicket = require("../../models/UnlockTicket");
 const PcUnit = require("../../models/PcUnit");
 const PcPresence = require("../../models/PcPresence");
 const asyncHandler = require("../../utils/asyncHandler");
@@ -28,6 +29,13 @@ const checkoutSession = asyncHandler(async (req, res) => {
   session.checkedOutByUserId = req.user?._id || null;
   session.feedbackStatus = req.body.triggerFeedback ? "triggered" : "pending";
   await session.save();
+
+  const ticket = await UnlockTicket.findOne({ visitSessionId: session._id });
+  if (ticket && ticket.status === "active") {
+    ticket.status = "used";
+    ticket.usedAt = new Date();
+    await ticket.save();
+  }
 
   if (session.assignedPcId) {
     await PcUnit.findByIdAndUpdate(session.assignedPcId._id, { status: "available" });

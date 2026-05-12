@@ -113,8 +113,15 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           backgroundImage: "none",
-          backgroundColor: "#000000",
+          backgroundColor: "#FFFFFF",
           borderRadius: "12px",
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#FFFFFF",
         },
       },
     },

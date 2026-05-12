@@ -25,7 +25,7 @@ export default function StatCard({ label, value, hint, icon, delay = 0 }) {
           left: 0,
           right: 0,
           height: "4px",
-          background: "linear-gradient(90deg, #0D2B6B 0%, #2EC9FF 100%)",
+          background: "linear-gradient(90deg, #0D2B6B 0%, #1A3F8F 100%)",
         },
         "&:hover": {
           boxShadow: "var(--shadow-md)",

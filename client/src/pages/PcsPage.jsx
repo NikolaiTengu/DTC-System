@@ -61,7 +61,9 @@ export default function PcsPage() {
               </select>
             </label>
           </div>
-          <button className="btn btn-primary">Add PC</button>
+          <div className="form-actions">
+            <button className="btn btn-primary">Add PC</button>
+          </div>
         </form>
         <div className="panel card">
           <h2>Registered PCs</h2>

@@ -11,6 +11,7 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  Collapse,
   Divider,
   Typography,
   Button,
@@ -27,6 +28,8 @@ import ErrorBoundary from "../components/ErrorBoundary";
 import {
   Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
+  ExpandLess,
+  ExpandMore,
   Logout as LogoutIcon,
   NotificationsOutlined as NotificationsOutlinedIcon,
   DashboardOutlined as DashboardOutlinedIcon,
@@ -80,9 +83,17 @@ export default function AppLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const isMobile = useMediaQuery("(max-width:767.95px)");
   const isCompactDesktop = useMediaQuery("(min-width:768px) and (max-width:1024px)");
+  const [openGroups, setOpenGroups] = useState(() =>
+    navGroups.reduce((acc, group) => {
+      acc[group.label] = true;
+      return acc;
+    }, {})
+  );
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const collapsed = !isMobile && (isCompactDesktop || !sidebarOpen);
+  const toggleGroup = (label) =>
+    setOpenGroups((prev) => ({ ...prev, [label]: !prev[label] }));
 
   // Notifications state (mocked). Replace with API calls when backend available.
   const [anchorEl, setAnchorEl] = useState(null);
@@ -147,23 +158,21 @@ export default function AppLayout() {
         }}
       >
         <Box
+          component="img"
+          src="/DICT-Logo-2.png"
+          alt="DICT logo"
           sx={{
             width: 40,
             height: 40,
             borderRadius: 2.2,
-            background: "rgba(255, 255, 255, 0.12)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#ffffff",
-            fontWeight: 800,
-            fontSize: "0.8rem",
-            border: "2px solid rgba(255,255,255,0.2)",
+            background: "#FFFFFF",
+            display: "block",
+            border: "2px solid rgba(255,255,255,0.3)",
             flexShrink: 0,
+            objectFit: "contain",
+            p: 0.5,
           }}
-        >
-          DTC
-        </Box>
+        />
         {!collapsedView ? (
           <Box sx={{ minWidth: 0 }}>
             <Typography variant="subtitle2" sx={{ fontWeight: 800, lineHeight: 1.15, color: "#FFFFFF", fontSize: "0.95rem" }}>
@@ -180,94 +189,114 @@ export default function AppLayout() {
         {navGroups.map((group) => (
           <Box key={group.label} sx={{ mb: 1.25 }}>
             {!collapsedView ? (
-              <Typography
-                variant="overline"
-                sx={{
-                  display: "block",
-                  px: 2,
-                  py: 0.75,
-                  color: "rgba(255, 255, 255, 0.9)",
-                  fontSize: "0.62rem",
-                  letterSpacing: "0.16em",
-                  fontWeight: 700,
-                }}
-              >
-                {group.label}
-              </Typography>
+              <List sx={{ p: 0 }}>
+                <ListItem disablePadding sx={{ mb: 0.25 }}>
+                  <ListItemButton
+                    onClick={() => toggleGroup(group.label)}
+                    sx={{
+                      borderRadius: 1.25,
+                      minHeight: 40,
+                      mx: 1,
+                      px: 1.5,
+                      gap: 1,
+                      color: "rgba(255, 255, 255, 0.9)",
+                      backgroundColor: "rgba(255, 255, 255, 0.08)",
+                      "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.12)" },
+                    }}
+                  >
+                    <ListItemText
+                      primary={group.label}
+                      sx={{
+                        m: 0,
+                        "& .MuiListItemText-primary": {
+                          fontSize: "0.72rem",
+                          fontWeight: 700,
+                          letterSpacing: "0.12em",
+                          textTransform: "uppercase",
+                          color: "#FFFFFF",
+                        },
+                      }}
+                    />
+                    {openGroups[group.label] ? <ExpandLess fontSize="small" /> : <ExpandMore fontSize="small" />}
+                  </ListItemButton>
+                </ListItem>
+              </List>
             ) : null}
 
-            <List sx={{ p: 0 }}>
-              {group.items.map((item, index) => {
-                const ItemIcon = item.icon;
+            <Collapse in={collapsedView || openGroups[group.label]} timeout="auto" unmountOnExit>
+              <List sx={{ p: 0 }}>
+                {group.items.map((item, index) => {
+                  const ItemIcon = item.icon;
 
-                return (
-                  <ListItem key={item.href} disablePadding sx={{ mb: 0.25 }}>
-                    <Tooltip title={collapsedView ? item.label : ""} placement="right" arrow>
-                      <ListItemButton
-                        component={NavLink}
-                        to={item.href}
-                        end={item.end ?? false}
-                        sx={{
-                          borderRadius: 1.25,
-                          minHeight: 44,
-                          mx: 1,
-                          px: collapsedView ? 1 : 1.75,
-                          gap: 1.25,
-                          color: "rgba(255, 255, 255, 0.85)",
-                          borderLeft: "3px solid transparent",
-                          transition: "all 0.2s ease",
-                          animation: "navSlideIn 0.35s ease both",
-                          animationDelay: `${0.04 * index}s`,
-                          "&.active": {
-                            backgroundColor: "rgba(255, 255, 255, 0.15)",
-                            color: "#FFFFFF",
-                            fontWeight: 600,
-                            borderLeftColor: "#F5C300",
-                            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08)",
-                            "& .MuiListItemText-primary": {
-                              fontWeight: 700,
-                            },
-                          },
-                          "&:hover": {
-                            backgroundColor: "rgba(255,255,255,0.08)",
-                            color: "#FFFFFF",
-                          },
-                        }}
-                      >
-                        <Box
+                  return (
+                    <ListItem key={item.href} disablePadding sx={{ mb: 0.25 }}>
+                      <Tooltip title={collapsedView ? item.label : ""} placement="right" arrow>
+                        <ListItemButton
+                          component={NavLink}
+                          to={item.href}
+                          end={item.end ?? false}
                           sx={{
-                            width: 20,
-                            display: "grid",
-                            placeItems: "center",
-                            color: "inherit",
-                            flexShrink: 0,
+                            borderRadius: 1.25,
+                            minHeight: 44,
+                            mx: 1,
+                            px: collapsedView ? 1 : 1.75,
+                            gap: 1.25,
+                            color: "rgba(255, 255, 255, 0.85)",
+                            borderLeft: "3px solid transparent",
+                            transition: "all 0.2s ease",
+                            animation: "navSlideIn 0.35s ease both",
+                            animationDelay: `${0.04 * index}s`,
+                            "&.active": {
+                              backgroundColor: "rgba(255, 255, 255, 0.15)",
+                              color: "#FFFFFF",
+                              fontWeight: 600,
+                              borderLeftColor: "#F5C300",
+                              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08)",
+                              "& .MuiListItemText-primary": {
+                                fontWeight: 700,
+                              },
+                            },
+                            "&:hover": {
+                              backgroundColor: "rgba(255,255,255,0.08)",
+                              color: "#FFFFFF",
+                            },
                           }}
                         >
-                          <ItemIcon fontSize="small" />
-                        </Box>
-                        {!collapsedView ? (
-                          <ListItemText
-                            primary={item.label}
+                          <Box
                             sx={{
-                              m: 0,
+                              width: 20,
+                              display: "grid",
+                              placeItems: "center",
                               color: "inherit",
-                              "& .MuiListItemText-primary": {
-                                color: "inherit",
-                                fontSize: "0.92rem",
-                                lineHeight: 1.2,
-                                whiteSpace: "nowrap",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                              },
+                              flexShrink: 0,
                             }}
-                          />
-                        ) : null}
-                      </ListItemButton>
-                    </Tooltip>
-                  </ListItem>
-                );
-              })}
-            </List>
+                          >
+                            <ItemIcon fontSize="small" />
+                          </Box>
+                          {!collapsedView ? (
+                            <ListItemText
+                              primary={item.label}
+                              sx={{
+                                m: 0,
+                                color: "inherit",
+                                "& .MuiListItemText-primary": {
+                                  color: "inherit",
+                                  fontSize: "0.92rem",
+                                  lineHeight: 1.2,
+                                  whiteSpace: "nowrap",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                },
+                              }}
+                            />
+                          ) : null}
+                        </ListItemButton>
+                      </Tooltip>
+                    </ListItem>
+                  );
+                })}
+              </List>
+            </Collapse>
           </Box>
         ))}
       </Box>
@@ -373,33 +402,18 @@ export default function AppLayout() {
               spacing={2}
               sx={{ display: "flex", alignItems: "center" }}
             >
-              <Badge
-                badgeContent={unreadCount}
-                color="primary"
+              <IconButton
+                aria-label="Notifications"
+                onClick={handleBellClick}
                 sx={{
-                  "& .MuiBadge-badge": {
-                    backgroundColor: "#0D2B6B",
-                    color: "#FFFFFF",
-                    fontWeight: 700,
-                    minWidth: 16,
-                    height: 16,
-                    padding: 0,
-                  },
+                  color: "#0D2B6B",
+                  bgcolor: "rgba(255, 255, 255, 0.06)",
+                  border: "1px solid rgba(255, 255, 255, 0.12)",
+                  "&:hover": { bgcolor: "rgba(255, 255, 255, 0.1)" },
                 }}
               >
-                <IconButton
-                  aria-label="Notifications"
-                  onClick={handleBellClick}
-                  sx={{
-                    color: "#0D2B6B",
-                    bgcolor: "rgba(255, 255, 255, 0.06)",
-                    border: "1px solid rgba(255, 255, 255, 0.12)",
-                    "&:hover": { bgcolor: "rgba(255, 255, 255, 0.1)" },
-                  }}
-                >
-                  <NotificationsOutlinedIcon fontSize="small" />
-                </IconButton>
-              </Badge>
+                <NotificationsOutlinedIcon fontSize="small" />
+              </IconButton>
 
               <Menu
                 anchorEl={anchorEl}
@@ -483,6 +497,11 @@ export default function AppLayout() {
                   borderColor: "var(--color-border)",
                   color: "#0D2B6B",
                   borderWidth: "1.5px",
+                  borderRadius: "999px",
+                  height: 36,
+                  px: 2.5,
+                  fontWeight: 600,
+                  textTransform: "none",
                   "&:hover": {
                     backgroundColor: "rgba(255, 255, 255, 0.06)",
                     borderColor: "#CC2027",

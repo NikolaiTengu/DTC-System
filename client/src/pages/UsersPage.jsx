@@ -89,7 +89,9 @@ export default function UsersPage() {
               </select>
             </label>
           </div>
-          <button className="btn btn-primary">Create User</button>
+          <div className="form-actions">
+            <button className="btn btn-primary">Create User</button>
+          </div>
         </form>
         <div className="panel card">
           <h2>User Directory</h2>

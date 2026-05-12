@@ -45,7 +45,7 @@
   --color-highlight-bg: rgba(13, 43, 107, 0.08);
   --color-highlight-hover: rgba(13, 43, 107, 0.16);
   --color-highlight-strong: rgba(13, 43, 107, 0.24);
-  --color-focus-ring: rgba(46, 201, 255, 0.35);
+  --color-focus-ring: rgba(13, 43, 107, 0.3);
   --color-nav-bg: #0D2B6B;
   --color-nav-text: #C8D8F5;
   --color-nav-active-bg: var(--color-highlight-hover);
@@ -129,7 +129,7 @@
     --color-highlight-bg: rgba(96, 165, 250, 0.15);
     --color-highlight-hover: rgba(96, 165, 250, 0.25);
     --color-highlight-strong: rgba(96, 165, 250, 0.35);
-    --color-focus-ring: rgba(56, 189, 248, 0.35);
+    --color-focus-ring: rgba(96, 165, 250, 0.35);
     --color-nav-bg: #1E293B;
     --color-nav-text: #BFDBFE;
     --color-nav-active-bg: #2563EB;

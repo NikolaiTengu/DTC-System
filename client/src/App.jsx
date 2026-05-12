@@ -4,6 +4,8 @@ import { Box, CircularProgress, LinearProgress, Typography } from "@mui/material
 import { useAuth } from "./contexts/AuthContext";
 import AppLayout from "./layouts/AppLayout";
 const LoginPage = lazy(() => import("./pages/LoginPage"));
+const UserLoginPage = lazy(() => import("./pages/UserLoginPage"));
+const UserWelcomePage = lazy(() => import("./pages/UserWelcomePage"));
 const DashboardPage = lazy(() => import("./pages/DashboardPage"));
 const UsersPage = lazy(() => import("./pages/UsersPage"));
 const RolesPage = lazy(() => import("./pages/RolesPage"));
@@ -83,6 +85,8 @@ export default function App() {
     <Suspense fallback={<LoadingScreen label="Loading modules" />}>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/user-login" element={<UserLoginPage />} />
+        <Route path="/user-welcome" element={<UserWelcomePage />} />
         <Route path="/guest-register" element={<SelfRegistrationPage />} />
         <Route
           path="/"

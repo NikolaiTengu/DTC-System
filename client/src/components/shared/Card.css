@@ -6,6 +6,10 @@
   box-shadow: var(--shadow-sm);
 }
 
+.panel.card {
+  background: #FFFFFF;
+}
+
 @media (min-width: 768px) {
   .card { padding: var(--space-6); }
 }

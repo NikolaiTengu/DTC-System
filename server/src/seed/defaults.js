@@ -172,21 +172,136 @@ async function seedDefaults() {
       createdBy: superAdmin._id,
       updatedBy: superAdmin._id,
       questions: [
-        { id: "q1", label: "Overall satisfaction", type: "rating", required: true, order: 1, options: [] },
-        { id: "q2", label: "Was the staff helpful?", type: "yes_no", required: true, order: 2, options: [] },
+        { id: "email", label: "Email", type: "short_text", required: true, order: 1, options: [] },
+        { id: "participant_name", label: "Participant's Name", type: "short_text", required: true, order: 2, options: [] },
+        { id: "province", label: "Province", type: "short_text", required: true, order: 3, options: [] },
         {
-          id: "q3",
-          label: "Services used",
-          type: "checkbox",
-          required: false,
-          order: 3,
+          id: "region",
+          label: "Region",
+          type: "multiple_choice",
+          required: true,
+          order: 4,
           options: [
-            { label: "Internet", value: "internet" },
-            { label: "Training", value: "training" },
-            { label: "Printing", value: "printing" }
+            { label: "REGION I - ILOCOS REGION", value: "region_i" },
+            { label: "REGION II - CAGAYAN VALLEY", value: "region_ii" },
+            { label: "REGION III - CENTRAL LUZON", value: "region_iii" },
+            { label: "REGION IVA - CALABARZON", value: "region_iva" },
+            { label: "REGION IVB - MIMAROPA REGION", value: "region_ivb" },
+            { label: "REGION V - BICOL REGION", value: "region_v" },
+            { label: "REGION VI - WESTERN VISAYAS", value: "region_vi" },
+            { label: "REGION VII - CENTRAL VISAYAS", value: "region_vii" },
+            { label: "REGION VIII - EASTERN VISAYAS", value: "region_viii" },
+            { label: "REGION IX - ZAMBOANGA PENINSULA", value: "region_ix" },
+            { label: "REGION X - NORTHERN MINDANAO", value: "region_x" },
+            { label: "REGION XI - DAVAO REGION", value: "region_xi" },
+            { label: "REGION XII - SOCCSKSARGEN", value: "region_xii" },
+            { label: "REGION XIII - CARAGA", value: "region_xiii" },
+            { label: "NATIONAL CAPITAL REGION", value: "ncr" }
           ]
         },
-        { id: "q4", label: "Comments", type: "long_text", required: false, order: 4, options: [] }
+        {
+          id: "age",
+          label: "Age",
+          type: "multiple_choice",
+          required: true,
+          order: 5,
+          options: [
+            { label: "20 - 30", value: "20_30" },
+            { label: "31 - 40", value: "31_40" },
+            { label: "41 - 50", value: "41_50" },
+            { label: "51 - 60", value: "51_60" },
+            { label: "Above 60", value: "above_60" }
+          ]
+        },
+        {
+          id: "gender",
+          label: "Gender",
+          type: "multiple_choice",
+          required: true,
+          order: 6,
+          options: [
+            { label: "Male", value: "male" },
+            { label: "Female", value: "female" },
+            { label: "Prefer not to answer", value: "prefer_not" }
+          ]
+        },
+        { id: "citizenship", label: "Citizenship", type: "short_text", required: true, order: 7, options: [] },
+        {
+          id: "agency_office",
+          label: "Agency/Office",
+          type: "multiple_choice",
+          required: true,
+          order: 8,
+          options: [
+            { label: "NGA", value: "nga" },
+            { label: "SUC (Personnel)", value: "suc_personnel" },
+            { label: "LGU", value: "lgu" },
+            { label: "SUC/HEI (Student)", value: "suc_hei_student" },
+            { label: "GOCC", value: "gocc" },
+            { label: "Others", value: "others" }
+          ]
+        },
+        {
+          id: "social_category",
+          label: "Social Category (Choose all that apply)",
+          type: "checkbox",
+          required: true,
+          order: 9,
+          options: [
+            { label: "Person with Disability", value: "pwd" },
+            { label: "LGBTQIA+", value: "lgbtqia" },
+            { label: "Senior Citizen", value: "senior" },
+            { label: "Solo Parent", value: "solo_parent" },
+            { label: "Indigenous People", value: "indigenous" },
+            { label: "Not applicable", value: "not_applicable" },
+            { label: "Other", value: "other" }
+          ]
+        },
+        { id: "social_category_other", label: "Social Category (Other)", type: "short_text", required: false, order: 10, options: [] },
+        {
+          id: "privacy_agreement",
+          label: "I agree to the Data Privacy Act statement and certification requirements.",
+          type: "checkbox",
+          required: true,
+          order: 11,
+          options: [{ label: "Agree", value: "agree" }]
+        },
+        { id: "relevance_current_work", label: "Relevance to your current work", type: "rating", required: true, order: 12, options: [] },
+        { id: "relevance_future_work", label: "Relevance to your future / desired work", type: "rating", required: true, order: 13, options: [] },
+        { id: "relevance_institution", label: "Relevance to your institution's / agency's goals", type: "rating", required: true, order: 14, options: [] },
+        { id: "info_amount", label: "Amount of information covered in the course", type: "rating", required: true, order: 15, options: [] },
+        { id: "info_useful", label: "Extent to which you gained ideas useful to your work", type: "rating", required: true, order: 16, options: [] },
+        { id: "info_new_skills", label: "Extent to which you have acquired new skills", type: "rating", required: true, order: 17, options: [] },
+        { id: "info_expectations", label: "Extent that this course / training / seminar met your expectations", type: "rating", required: true, order: 18, options: [] },
+        { id: "design_objectives", label: "Effectiveness of the course / training / seminar objectives", type: "rating", required: true, order: 19, options: [] },
+        { id: "design_visual_aids", label: "Effectiveness of the visual aids in reinforcing learning", type: "rating", required: true, order: 20, options: [] },
+        { id: "design_time_topics", label: "Adequacy of time allotted to each topic", type: "rating", required: true, order: 21, options: [] },
+        { id: "design_sequence", label: "Logic in the progression or sequence of topics", type: "rating", required: true, order: 22, options: [] },
+        { id: "design_discussion_time", label: "Time allotted for discussions and Q and A", type: "rating", required: true, order: 23, options: [] },
+        { id: "design_methods", label: "Variety of the training methods used", type: "rating", required: true, order: 24, options: [] },
+        { id: "interaction_encouragement", label: "Effectiveness of the resource person / trainer in encouraging interaction", type: "rating", required: true, order: 25, options: [] },
+        { id: "interaction_responsiveness", label: "Responsiveness of the resource person / trainer to questions", type: "rating", required: true, order: 26, options: [] },
+        { id: "interaction_participants", label: "Interaction between participants and resource person / trainer", type: "rating", required: true, order: 27, options: [] },
+        { id: "mastery_knowledge", label: "Knowledge about the subject matter", type: "rating", required: true, order: 28, options: [] },
+        { id: "mastery_organized", label: "Presents topics in a well-organized manner", type: "rating", required: true, order: 29, options: [] },
+        { id: "mastery_current", label: "Injects current developments relevant to the subject", type: "rating", required: true, order: 30, options: [] },
+        { id: "mastery_notes", label: "Uses notes wisely", type: "rating", required: true, order: 31, options: [] },
+        { id: "methodology_explain", label: "Able to explain theories and concepts clearly", type: "rating", required: true, order: 32, options: [] },
+        { id: "methodology_exercises", label: "Gives adequate exercises / assignments", type: "rating", required: true, order: 33, options: [] },
+        { id: "methodology_materials", label: "Utilizes instructional materials effectively", type: "rating", required: true, order: 34, options: [] },
+        { id: "methodology_questions", label: "Encourages participants to raise questions", type: "rating", required: true, order: 35, options: [] },
+        { id: "methodology_time", label: "Makes use of time efficiently", type: "rating", required: true, order: 36, options: [] },
+        { id: "communication_voice", label: "Projects a clear and audible voice", type: "rating", required: true, order: 37, options: [] },
+        { id: "communication_clarity", label: "Expresses his / her ideas clearly, fluently and spontaneously", type: "rating", required: true, order: 38, options: [] },
+        { id: "class_inspire", label: "Able to inspire and maintain the participants' interest", type: "rating", required: true, order: 39, options: [] },
+        { id: "class_help", label: "Willingness to help in the participant's learning", type: "rating", required: true, order: 40, options: [] },
+        { id: "class_open", label: "Open to criticism and gives / accepts suggestions", type: "rating", required: true, order: 41, options: [] },
+        { id: "class_discipline", label: "Able to maintain class / classroom discipline", type: "rating", required: true, order: 42, options: [] },
+        { id: "quality_time", label: "Follows the time duration (class hours)", type: "rating", required: true, order: 43, options: [] },
+        { id: "quality_dress", label: "Dresses neatly and appropriately", type: "rating", required: true, order: 44, options: [] },
+        { id: "quality_courteous", label: "Courteous in answering the participant's questions", type: "rating", required: true, order: 45, options: [] },
+        { id: "quality_authority", label: "Projects image of authority", type: "rating", required: true, order: 46, options: [] },
+        { id: "other_comments", label: "Other Comments", type: "long_text", required: true, order: 47, options: [] }
       ]
     },
     { new: true, upsert: true }

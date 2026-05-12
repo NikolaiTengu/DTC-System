@@ -116,7 +116,9 @@ export default function EventsPage() {
               <span className="chip" key={speaker.name}>{speaker.name}</span>
             ))}
           </div>
-          <button className="btn btn-primary">Create Event</button>
+          <div className="form-actions">
+            <button className="btn btn-primary">Create Event</button>
+          </div>
         </form>
         <div className="panel card">
           <h2>Event List</h2>

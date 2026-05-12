@@ -109,20 +109,20 @@
 
 .pc-name {
   font-weight: 600;
-  color: var(--color-text-primary);
+  color: #0D2B6B;
   font-size: 0.95rem;
   word-break: break-word;
 }
 
 .pc-code {
   font-size: 0.85rem;
-  color: var(--color-text-muted);
+  color: #0D2B6B;
   font-family: monospace;
 }
 
 .pc-zone {
   font-size: 0.8rem;
-  color: var(--color-text-secondary);
+  color: #0D2B6B;
   background: var(--color-bg-subtle);
   padding: 0.25rem 0.5rem;
   border-radius: 3px;
@@ -131,7 +131,7 @@
 
 .pc-status {
   font-size: 0.8rem;
-  color: var(--color-text-secondary);
+  color: #0D2B6B;
   font-weight: 500;
   margin-top: 0.2rem;
 }
@@ -158,9 +158,9 @@
   width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
-  background: var(--color-bg-surface);
+  background: #FFFFFF;
   border: 1px solid var(--color-border);
-  border-radius: 6px;
+  border-radius: 12px;
   overflow: hidden;
   margin-bottom: 1rem;
 }
@@ -176,21 +176,29 @@
 }
 
 .pc-table thead th {
-  background: var(--navy);
-  color: #FFFFFF;
+  background: #F7FAFF;
+  color: #0D2B6B;
   font-weight: 700;
   font-size: 0.85rem;
 }
 
-/* Front desk registration overrides (cyan text) */
+.pc-table tbody tr {
+  background: #FFFFFF;
+}
+
+.pc-table tbody tr:nth-child(even) {
+  background: #FAFBFF;
+}
+
+/* Front desk registration overrides (dark blue text) */
 .frontdesk-registration .pc-selector-container h3,
 .frontdesk-registration .legend-item {
-  color: #2EC9FF;
+  color: #0D2B6B;
 }
 
 .frontdesk-registration .pc-table th,
 .frontdesk-registration .pc-table td {
-  color: #2EC9FF;
+  color: #0D2B6B;
 }
 
 .pc-table tbody tr:last-child td {
@@ -198,8 +206,9 @@
 }
 
 .pc-row.disabled {
-  color: var(--color-text-muted);
-  background: var(--color-bg-subtle);
+  color: #0D2B6B;
+  background: #FAFBFF;
+  opacity: 1;
 }
 
 .pc-row.selected {
@@ -231,10 +240,10 @@
 }
 
 .select-pc-btn {
-  background: var(--color-accent);
+  background: linear-gradient(135deg, #0D2B6B 0%, #1A3F8F 50%, #CC2027 100%);
   color: #FFFFFF;
-  border-radius: 6px;
-  padding: 0.48rem 0.6rem;
+  border-radius: 999px;
+  padding: 0.52rem 0.75rem;
   border: none;
   cursor: pointer;
   font-size: 0.82rem;
@@ -243,12 +252,12 @@
 }
 
 .select-pc-btn:hover:not(:disabled) {
-  background: var(--color-accent-hover);
+  background: linear-gradient(135deg, #0D2B6B 0%, #2952B3 55%, #CC2027 100%);
 }
 
 .select-pc-btn:disabled {
-  background: var(--color-bg-subtle);
-  color: var(--color-text-muted);
+  background: #E6EBF5;
+  color: #6B7280;
   cursor: not-allowed;
 }
 
@@ -257,6 +266,28 @@
   gap: 0.75rem;
   align-items: center;
   justify-content: space-between;
+}
+
+.pc-pagination span {
+  color: #0D2B6B;
+  font-weight: 600;
+}
+
+.pc-pagination button {
+  background: linear-gradient(135deg, #0D2B6B 0%, #1A3F8F 50%, #CC2027 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 999px;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  min-width: 110px;
+  cursor: pointer;
+}
+
+.pc-pagination button:disabled {
+  background: #E6EBF5;
+  color: #6B7280;
+  cursor: not-allowed;
 }
 
 .pc-pagination span {
