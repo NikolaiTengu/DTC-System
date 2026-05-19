@@ -13,6 +13,11 @@
   line-height: 1.4;
 }
 
+.field-stack {
+  display: grid;
+  gap: 0.35rem;
+}
+
 .input:hover, .select:hover { 
   border-color: var(--color-accent-hover); 
 }

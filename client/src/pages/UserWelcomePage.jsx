@@ -2,12 +2,15 @@ import {
   Box,
   Button,
   Checkbox,
+  FormControl,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   FormControlLabel,
   FormGroup,
+  Radio,
+  RadioGroup,
   MenuItem,
   TextField,
   Typography
@@ -629,20 +632,46 @@ export default function UserWelcomePage() {
                       ) : null}
 
                       {question.type === "rating" ? (
-                        <TextField
-                          select
-                          fullWidth
-                          label={question.label}
-                          value={value}
-                          onChange={(event) => updateAnswer(question.id, event.target.value)}
-                          disabled={isDisabled}
-                        >
-                          {ratingOptions.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                              {option.label}
-                            </MenuItem>
-                          ))}
-                        </TextField>
+                        <FormControl fullWidth disabled={isDisabled}>
+                          <Typography variant="body2" sx={{ color: "#0D2B6B", fontWeight: 600, mb: 0.75 }}>
+                            {question.label}
+                          </Typography>
+                          <RadioGroup
+                            row
+                            value={value}
+                            onChange={(event) => updateAnswer(question.id, event.target.value)}
+                            sx={{ gap: 0.75, flexWrap: "wrap" }}
+                          >
+                            {ratingOptions.map((option) => {
+                              const isSelected = value === option.value;
+
+                              return (
+                                <FormControlLabel
+                                  key={option.value}
+                                  value={option.value}
+                                  control={<Radio size="small" />}
+                                  label={option.value}
+                                  sx={{
+                                    m: 0,
+                                    px: 1,
+                                    py: 0.5,
+                                    minHeight: 40,
+                                    borderRadius: "999px",
+                                    border: "1px solid",
+                                    borderColor: isSelected ? "#0D2B6B" : "rgba(13, 43, 107, 0.18)",
+                                    backgroundColor: isSelected ? "rgba(13, 43, 107, 0.08)" : "#FFFFFF",
+                                    transition: "border-color 160ms ease, background-color 160ms ease",
+                                    "& .MuiFormControlLabel-label": {
+                                      color: "#0D2B6B",
+                                      fontWeight: 700,
+                                      fontSize: "0.92rem"
+                                    }
+                                  }}
+                                />
+                              );
+                            })}
+                          </RadioGroup>
+                        </FormControl>
                       ) : null}
 
                       {question.type === "checkbox" ? (

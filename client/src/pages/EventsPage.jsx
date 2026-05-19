@@ -57,23 +57,41 @@ export default function EventsPage() {
           <h2>Create Event</h2>
           <div className="form-grid">
             {[
-              { key: "title", label: "Title" },
-              { key: "description", label: "Description" },
-              { key: "date", label: "Date" },
-              { key: "startTime", label: "Start Time" },
-              { key: "endTime", label: "End Time" },
-              { key: "venue", label: "Venue" },
-              { key: "capacity", label: "Capacity" },
-              { key: "notes", label: "Notes" },
+              { key: "title", label: "Title", type: "text" },
+              { key: "description", label: "Description", type: "textarea" },
+              { key: "date", label: "Date", type: "date" },
+              { key: "startTime", label: "Start Time", type: "time" },
+              { key: "endTime", label: "End Time", type: "time" },
+              { key: "venue", label: "Venue", type: "text" },
+              { key: "capacity", label: "Capacity", type: "number" },
+              { key: "notes", label: "Notes", type: "textarea" },
             ].map((field) => (
-              <label key={field.key}>
-                {field.label}
-                {field.key === "description" || field.key === "notes" ? (
-                  <textarea className="textarea" value={form[field.key]} onChange={(e) => setForm((current) => ({ ...current, [field.key]: e.target.value }))} />
-                ) : (
-                  <input className="input" value={form[field.key]} onChange={(e) => setForm((current) => ({ ...current, [field.key]: e.target.value }))} />
-                )}
-              </label>
+              field.key === "date" ? (
+                <div className="field-stack" key={field.key}>
+                  <label htmlFor="event-date">{field.label}</label>
+                  <input
+                    id="event-date"
+                    className="input"
+                    type="date"
+                    value={form[field.key]}
+                    onChange={(e) => setForm((current) => ({ ...current, [field.key]: e.target.value }))}
+                  />
+                </div>
+              ) : (
+                <label key={field.key}>
+                  {field.label}
+                  {field.type === "textarea" ? (
+                    <textarea className="textarea" value={form[field.key]} onChange={(e) => setForm((current) => ({ ...current, [field.key]: e.target.value }))} />
+                  ) : (
+                    <input
+                      className="input"
+                      type={field.type}
+                      value={form[field.key]}
+                      onChange={(e) => setForm((current) => ({ ...current, [field.key]: e.target.value }))}
+                    />
+                  )}
+                </label>
+              )
             ))}
             <label>
               Event Type
